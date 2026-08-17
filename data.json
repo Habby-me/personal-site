@@ -1,0 +1,38 @@
+{
+  "name": "HABBY",
+  "heroEyebrow": "Welcome to my universe",
+  "heroTitle": "Designing ideas\ninto reality.",
+  "heroSubtitle": "在设计、产品与代码之间探索，把每一个微小的灵感，变成真实可见的数字体验。",
+  "about": "你好，我是 Habby。\n\n我喜欢观察、设计和创造，也享受从一个模糊想法出发，慢慢把它打磨成完整作品的过程。这里是我的个人宇宙，记录项目、实验，以及那些仍在生长的灵感。",
+  "motto": "Stay curious. Keep creating.",
+  "skills": ["UI Design", "Product Thinking", "HTML / CSS", "JavaScript", "Visual Storytelling", "Creative Coding"],
+  "contactText": "如果你对我的作品感兴趣，或有一个值得一起实现的想法，欢迎来找我聊聊。",
+  "contactButton": "和我联系 ↗",
+  "contactLink": "https://github.com/Habby-me",
+  "projects": [
+    {
+      "title": "测试项目-斜纹标签",
+      "type": "pattern",
+      "badge": "NEW PROJECT - 1",
+      "description": "一个关于视觉系统、布局与交互细节的设计实验。",
+      "btnText": "EXPLORE PROJECT",
+      "link": "#"
+    },
+    {
+      "title": "测试项目-3D金属星球",
+      "type": "planet",
+      "badge": "NEW PROJECT - 2",
+      "description": "以星球为核心视觉元素的沉浸式网页体验。",
+      "btnText": "EXPLORE PROJECT",
+      "link": "#"
+    },
+    {
+      "title": "测试项目-星云光晕",
+      "type": "nebula",
+      "badge": "NEW PROJECT - 3",
+      "description": "用光影、颜色和动效营造属于数字空间的氛围。",
+      "btnText": "EXPLORE PROJECT",
+      "link": "#"
+    }
+  ]
+}

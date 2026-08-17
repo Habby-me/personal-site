@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网站内容管理后台 · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --border: rgba(255, 255, 255, 0.1);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #3b82f6;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; padding: 30px 20px; }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { margin-bottom: 24px; font-size: 1.6rem; }
+    .card-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+    input, textarea, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; font-family: inherit; }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); outline: none; }
+    .project-item { background: rgba(0,0,0,0.25); border: 1px dashed var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; position: relative; }
+    .btn { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: opacity 0.2s; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; margin-top: 10px; }
+    .btn-danger { background: var(--danger); color: #fff; font-size: 0.75rem; padding: 6px 12px; position: absolute; right: 14px; top: 14px; }
+    .btn:hover { opacity: 0.9; }
+    .flex-row { display: flex; gap: 12px; }
+    .status-msg { margin-top: 16px; font-size: 0.9rem; }
+    .notice { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+      <h1>网站后台管理 (Admin)</h1>
+      <a href="index.html" style="color: var(--accent); text-decoration: none;">← 返回首页</a>
+    </div>
+
+    <div class="card-box">
+      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">1. GitHub 提交配置</h2>
+      <div class="flex-row">
+        <div class="form-group" style="flex: 1;">
+          <label>GitHub 用户名 / 仓库名</label>
+          <input type="text" id="repoPath" placeholder="例如: habby-me/personal-site" value="habby-me/personal-site">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Personal Access Token (PAT)</label>
+          <input type="password" id="ghToken" placeholder="github_pat_xxxxxx">
+        </div>
+      </div>
+      <p class="notice">* Token 仅保存在浏览器本地（localStorage）。需要勾选 Contents 的 Read and Write 权限。</p>
+    </div>
+
+    <div class="card-box">
+      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">2. 基本信息设置</h2>
+      <div class="form-group">
+        <label>网站名称 / Logo 标识</label>
+        <input type="text" id="siteName">
+      </div>
+      <div class="form-group">
+        <label>首屏眉标题 / 英文小标题</label>
+        <input type="text" id="heroEyebrow">
+      </div>
+      <div class="form-group">
+        <label>Hero 大标题</label>
+        <textarea id="heroTitle" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Hero 副标题 / 签名</label>
+        <input type="text" id="heroSubtitle">
+      </div>
+      <div class="form-group">
+        <label>关于我</label>
+        <textarea id="aboutText" rows="6"></textarea>
+      </div>
+      <div class="form-group">
+        <label>个人短句 / Motto</label>
+        <input type="text" id="motto">
+      </div>
+      <div class="form-group">
+        <label>技能标签（使用英文逗号或中文逗号分隔）</label>
+        <input type="text" id="skills" placeholder="UI Design, HTML / CSS, JavaScript">
+      </div>
+      <div class="form-group">
+        <label>联系区说明</label>
+        <textarea id="contactText" rows="3"></textarea>
+      </div>
+      <div class="flex-row">
+        <div class="form-group" style="flex: 1;">
+          <label>联系按钮文字</label>
+          <input type="text" id="contactButton">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>联系按钮链接</label>
+          <input type="text" id="contactLink" placeholder="mailto:you@example.com 或 https://...">
+        </div>
+      </div>
+    </div>
+
+    <div class="card-box">
+      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">3. 精选项目管理</h2>
+      <div id="projectsContainer"></div>
+      <button class="btn btn-secondary" onclick="addProjectItem()">+ 添加新项目</button>
+    </div>
+
+    <div style="text-align: right;">
+      <button class="btn btn-primary" onclick="saveToGitHub()" id="saveBtn" style="padding: 12px 28px; font-size: 1rem;">
+        保存并同步到 GitHub
+      </button>
+      <div id="statusMsg" class="status-msg"></div>
+    </div>
+  </div>
+
+  <script>
+    let projectsData = [];
+
+    async function init() {
+      const savedToken = localStorage.getItem('gh_token');
+      const savedRepo = localStorage.getItem('gh_repo');
+      if (savedToken) document.getElementById('ghToken').value = savedToken;
+      if (savedRepo) document.getElementById('repoPath').value = savedRepo;
+
+      try {
+        const res = await fetch('data.json?t=' + Date.now());
+        const data = await res.json();
+        
+        document.getElementById('siteName').value = data.name || '';
+        document.getElementById('heroEyebrow').value = data.heroEyebrow || '';
+        document.getElementById('heroTitle').value = data.heroTitle || '';
+        document.getElementById('heroSubtitle').value = data.heroSubtitle || '';
+        document.getElementById('aboutText').value = data.about || '';
+        document.getElementById('motto').value = data.motto || '';
+        document.getElementById('skills').value = (data.skills || []).join(', ');
+        document.getElementById('contactText').value = data.contactText || '';
+        document.getElementById('contactButton').value = data.contactButton || '';
+        document.getElementById('contactLink').value = data.contactLink || '';
+        projectsData = data.projects || [];
+        renderProjectList();
+      } catch (err) {
+        showStatus('无法加载本地 data.json', 'var(--danger)');
+      }
+    }
+
+    function renderProjectList() {
+      const container = document.getElementById('projectsContainer');
+      container.innerHTML = '';
+
+      projectsData.forEach((item, index) => {
+        const el = document.createElement('div');
+        el.className = 'project-item';
+        el.innerHTML = `
+          <button class="btn btn-danger" onclick="removeProject(${index})">删除</button>
+          <div class="form-group" style="margin-right: 70px;">
+            <label>项目标题</label>
+            <input type="text" value="${item.title || ''}" oninput="projectsData[${index}].title = this.value">
+          </div>
+          <div class="flex-row">
+            <div class="form-group" style="flex: 1;">
+              <label>项目简介</label>
+              <textarea rows="2" oninput="projectsData[${index}].description = this.value">${item.description || ''}</textarea>
+            </div>
+          </div>
+          <div class="flex-row">
+            <div class="form-group" style="flex: 1;">
+              <label>预览视觉样式</label>
+              <select onchange="projectsData[${index}].type = this.value; renderProjectList();">
+                <option value="pattern" ${item.type === 'pattern' ? 'selected' : ''}>斜纹标签 (Pattern Badge)</option>
+                <option value="planet" ${item.type === 'planet' ? 'selected' : ''}>3D 金属星球 (Planet)</option>
+                <option value="nebula" ${item.type === 'nebula' ? 'selected' : ''}>星云光晕 (Nebula Glow)</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>标签文字 (仅斜纹样式生效)</label>
+              <input type="text" value="${item.badge || ''}" oninput="projectsData[${index}].badge = this.value" ${item.type !== 'pattern' ? 'disabled style="opacity:0.4;"' : ''}>
+            </div>
+          </div>
+          <div class="flex-row">
+            <div class="form-group" style="flex: 1;">
+              <label>底部按钮文案 (原 EXPLORE PROJECT)</label>
+              <input type="text" value="${item.btnText || 'EXPLORE PROJECT'}" oninput="projectsData[${index}].btnText = this.value">
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label>跳转链接 URL</label>
+              <input type="text" value="${item.link || ''}" oninput="projectsData[${index}].link = this.value" placeholder="https://...">
+            </div>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    function addProjectItem() {
+      projectsData.push({
+        title: '新项目标题',
+        type: 'pattern',
+        badge: 'NEW PROJECT',
+        description: '用一句话介绍这个项目。',
+        btnText: 'EXPLORE PROJECT',
+        link: '#'
+      });
+      renderProjectList();
+    }
+
+    function removeProject(index) {
+      projectsData.splice(index, 1);
+      renderProjectList();
+    }
+
+    function showStatus(text, color = '#fff') {
+      const el = document.getElementById('statusMsg');
+      el.style.color = color;
+      el.innerText = text;
+    }
+
+    async function saveToGitHub() {
+      const repo = document.getElementById('repoPath').value.trim();
+      const token = document.getElementById('ghToken').value.trim();
+
+      if (!repo || !token) {
+        showStatus('请先填写仓库名称和 Personal Access Token！', 'var(--danger)');
+        return;
+      }
+
+      localStorage.setItem('gh_token', token);
+      localStorage.setItem('gh_repo', repo);
+
+      const payloadData = {
+        name: document.getElementById('siteName').value,
+        heroEyebrow: document.getElementById('heroEyebrow').value,
+        heroTitle: document.getElementById('heroTitle').value,
+        heroSubtitle: document.getElementById('heroSubtitle').value,
+        about: document.getElementById('aboutText').value,
+        motto: document.getElementById('motto').value,
+        skills: document.getElementById('skills').value.split(/[,，]/).map(item => item.trim()).filter(Boolean),
+        contactText: document.getElementById('contactText').value,
+        contactButton: document.getElementById('contactButton').value,
+        contactLink: document.getElementById('contactLink').value,
+        projects: projectsData
+      };
+
+      const btn = document.getElementById('saveBtn');
+      btn.disabled = true;
+      showStatus('正在连接 GitHub API 提交更新...', '#9ca3af');
+
+      try {
+        const getUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
+        const getRes = await fetch(getUrl, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        let sha = '';
+        if (getRes.ok) {
+          const fileInfo = await getRes.json();
+          sha = fileInfo.sha;
+        }
+
+        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(payloadData, null, 2))));
+        const putRes = await fetch(getUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: 'Update site content via Admin Panel',
+            content: contentBase64,
+            sha: sha || undefined
+          })
+        });
+
+        if (putRes.ok) {
+          showStatus('✅ 保存成功！GitHub Pages 会在 1 分钟左右自动更新生效。', '#10b981');
+        } else {
+          const errData = await putRes.json();
+          showStatus(`❌ 保存失败: ${errData.message}`, 'var(--danger)');
+        }
+      } catch (err) {
+        showStatus('❌ 提交异常: ' + err.message, 'var(--danger)');
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
