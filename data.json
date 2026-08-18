@@ -5,7 +5,14 @@
   "heroSubtitle": "在设计、产品与代码之间探索，把每一个微小的灵感，变成真实可见的数字体验。",
   "about": "你好，我是 Habby。\n\n我喜欢观察、设计和创造，也享受从一个模糊想法出发，慢慢把它打磨成完整作品的过程。这里是我的个人宇宙，记录项目、实验，以及那些仍在生长的灵感。",
   "motto": "Stay curious. Keep creating.",
-  "skills": ["UI Design", "Product Thinking", "HTML / CSS", "JavaScript", "Visual Storytelling", "Creative Coding"],
+  "skills": [
+    "UI Design",
+    "Product Thinking",
+    "HTML / CSS",
+    "JavaScript",
+    "Visual Storytelling",
+    "Creative Coding"
+  ],
   "contactText": "如果你对我的作品感兴趣，或有一个值得一起实现的想法，欢迎来找我聊聊。",
   "contactButton": "和我联系 ↗",
   "contactLink": "https://github.com/Habby-me",
@@ -33,6 +40,14 @@
       "description": "用光影、颜色和动效营造属于数字空间的氛围。",
       "btnText": "EXPLORE PROJECT",
       "link": "#"
+    },
+    {
+      "title": "2万字解读：RAG（检索增强生成）起源、演进与思考研究报告",
+      "type": "pattern",
+      "badge": "NEW PROJECT",
+      "description": "我在人人都是产品经理上发表的一篇关于 RAG（检索增强生成）的深度研究报告。",
+      "btnText": "EXPLORE PROJECT",
+      "link": "https://www.woshipm.com/ai/6236208.html"
     }
   ]
 }
