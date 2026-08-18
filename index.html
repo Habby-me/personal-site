@@ -1,28 +1,1521 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#050713">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050713">
   <title>Habby · Personal Universe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
   <style>
-    :root{--bg:#050713;--paper:rgba(14,18,38,.72);--line:rgba(196,205,255,.13);--text:#f7f5ff;--muted:#a6abc4;--violet:#a995ff;--blue:#72c7ff;--gold:#f7d58b;--max:1180px}*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,sans-serif;line-height:1.6;overflow-x:hidden}a{color:inherit}.sky{position:fixed;inset:0;z-index:-3;background:radial-gradient(circle at 70% 8%,rgba(94,70,190,.18),transparent 30%),radial-gradient(circle at 8% 54%,rgba(31,112,179,.11),transparent 34%),linear-gradient(180deg,#03040b 0%,#070a17 52%,#0a0d1b 100%)}#starfield{position:fixed;inset:0;z-index:-2;pointer-events:none}.nebula{position:fixed;width:42vw;height:42vw;border-radius:50%;filter:blur(100px);opacity:.12;z-index:-1;pointer-events:none}.nebula.one{right:-18vw;top:18vh;background:#7259ff}.nebula.two{left:-22vw;bottom:-10vh;background:#2b9fd7}.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}.nav{position:fixed;left:0;right:0;top:0;z-index:30;background:rgba(5,7,19,.58);border-bottom:1px solid transparent;backdrop-filter:blur(18px);transition:.3s}.nav.scrolled{border-color:var(--line);background:rgba(5,7,19,.88)}.nav-inner{height:68px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:700;letter-spacing:.18em;text-decoration:none;text-transform:uppercase;font-size:.86rem}.nav-links{display:flex;align-items:center;gap:30px}.nav-links a{font-size:.82rem;color:var(--muted);text-decoration:none;transition:.2s}.nav-links a:hover{color:#fff}.admin-link{border:1px solid var(--line);border-radius:999px;padding:7px 13px!important}.hero{min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px;padding:125px 0 70px}.eyebrow{display:flex;align-items:center;gap:12px;color:var(--blue);font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:24px}.eyebrow:before{content:"";width:34px;height:1px;background:currentColor}.hero h1{font-family:"Playfair Display",serif;font-size:clamp(3.2rem,7vw,6.8rem);line-height:.94;letter-spacing:-.045em;white-space:pre-line;max-width:850px}.hero-sub{color:var(--muted);font-size:clamp(1rem,1.6vw,1.16rem);max-width:580px;margin:30px 0 36px}.hero-actions{display:flex;gap:13px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;text-decoration:none;font-size:.9rem;font-weight:600;transition:.25s}.btn-primary{color:#090b16;background:linear-gradient(135deg,#dcd4ff,#91d5ff)}.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(123,159,255,.24)}.btn-ghost{border:1px solid var(--line);background:rgba(255,255,255,.025)}.btn-ghost:hover{border-color:rgba(190,200,255,.35);background:rgba(255,255,255,.06)}.orbit-wrap{position:relative;width:min(390px,74vw);aspect-ratio:1;margin:auto;display:grid;place-items:center}.orbit{position:absolute;border:1px solid rgba(185,194,255,.18);border-radius:50%;animation:spin 28s linear infinite}.orbit.o1{inset:8%}.orbit.o2{inset:22%;animation-direction:reverse;animation-duration:20s}.orbit:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;top:12%;left:15%;background:var(--gold);box-shadow:0 0 18px var(--gold)}.orbit.o2:after{top:auto;left:auto;right:5%;bottom:28%;background:var(--blue);box-shadow:0 0 18px var(--blue)}.planet{width:34%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f7eaff 0 4%,#9a84db 22%,#483d81 52%,#15162d 78%);box-shadow:-22px 25px 55px rgba(0,0,0,.7),0 0 45px rgba(143,112,230,.2);position:relative}.planet:after{content:"";position:absolute;left:-37%;right:-37%;top:47%;height:18%;border:2px solid rgba(196,208,255,.62);border-radius:50%;transform:rotate(-13deg);box-shadow:0 0 12px rgba(159,184,255,.25)}.spark{position:absolute;color:white;text-shadow:0 0 12px white;animation:pulse 2.5s ease-in-out infinite}.spark.s1{top:12%;right:16%;font-size:22px}.spark.s2{bottom:18%;left:5%;font-size:12px;animation-delay:.8s}.scroll-note{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:.7rem;color:#777e9c;letter-spacing:.18em;text-transform:uppercase;writing-mode:vertical-rl}.scroll-note:after{content:"";display:block;width:1px;height:46px;background:linear-gradient(var(--muted),transparent);margin:12px auto 0}.section{padding:118px 0}.section-line{border-top:1px solid var(--line)}.section-head{display:grid;grid-template-columns:1fr 1.6fr;gap:30px;align-items:end;margin-bottom:55px}.kicker{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}.section-head h2{font-family:"Playfair Display",serif;font-size:clamp(2.3rem,4.4vw,4.3rem);line-height:1.05;letter-spacing:-.035em}.nowrap{white-space:nowrap}.section-desc{color:var(--muted);max-width:560px}.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}.glass{background:linear-gradient(145deg,rgba(18,23,48,.83),rgba(10,13,29,.65));border:1px solid var(--line);border-radius:26px;backdrop-filter:blur(18px)}.about-copy{padding:38px;font-size:1.1rem;color:#d9dbea;white-space:pre-line}.about-aside{padding:34px;display:flex;flex-direction:column;justify-content:space-between;min-height:260px}.quote-mark{font-size:1.7rem;line-height:1;color:var(--gold);text-shadow:0 0 18px rgba(247,213,139,.45)}.about-aside p{font-family:"Playfair Display",serif;font-style:italic;font-size:1.55rem;line-height:1.35}.constellation-line{height:1px;background:linear-gradient(90deg,var(--violet),var(--blue),transparent);margin-top:28px}.skills{display:flex;flex-wrap:wrap;gap:12px}.skill{padding:11px 17px;border:1px solid var(--line);border-radius:999px;color:#dfe1f1;background:rgba(255,255,255,.025);transition:.25s}.skill:before{content:"✦";color:var(--gold);margin-right:8px;font-size:.7rem}.skill:hover{transform:translateY(-2px);border-color:rgba(169,149,255,.48);background:rgba(169,149,255,.08)}.project-slider{position:relative}.projects{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:8px 2px 30px}.projects::-webkit-scrollbar{display:none}.card{flex:0 0 calc((100% - 40px)/3);min-width:0;min-height:440px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;scroll-snap-align:start;transition:.3s}.card:hover{transform:translateY(-7px);border-color:rgba(169,149,255,.38);box-shadow:0 24px 70px rgba(0,0,0,.28)}.slider-controls{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.slider-btn{width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:rgba(18,23,48,.8);color:var(--text);font:inherit;font-size:1.2rem;cursor:pointer;transition:.2s}.slider-btn:hover{border-color:rgba(169,149,255,.55);background:rgba(169,149,255,.14)}.slider-btn:disabled{opacity:.32;cursor:not-allowed}.card-visual{height:230px;position:relative;display:grid;place-items:center;overflow:hidden;background:#0b0e20}.card-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 58%,rgba(8,10,23,.68))}.preview-pattern{position:absolute;inset:0;background:radial-gradient(circle at 70% 25%,rgba(128,97,255,.36),transparent 28%),linear-gradient(135deg,#111630,#080a16)}.preview-pattern:before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,#000,transparent)}.preview-badge{position:relative;z-index:2;padding:8px 13px;border:1px solid var(--line);border-radius:999px;font-size:.68rem;letter-spacing:.14em;background:rgba(6,7,17,.68)}.planet-mini{width:82px;height:82px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#fff 0 3%,#b7a8e9 20%,#554779 55%,#17172d 80%);box-shadow:0 0 38px rgba(169,149,255,.28);position:relative;z-index:1}.planet-mini:after{content:"";position:absolute;left:-35%;right:-35%;top:48%;height:17%;border:1px solid #b9caff;border-radius:50%;transform:rotate(-14deg)}.nebula-mini{width:110px;height:70px;border-radius:50%;background:linear-gradient(135deg,#9f76ff,#4fb8ff);filter:blur(25px);box-shadow:0 0 38px #7b70ff;opacity:.78}.card-body{padding:26px;display:flex;flex-direction:column;flex:1}.card-num{font-size:.68rem;letter-spacing:.18em;color:var(--blue);margin-bottom:14px}.card-title{font-family:"Playfair Display",serif;font-size:1.45rem;line-height:1.25;margin-bottom:10px}.card-description{font-size:.9rem;color:var(--muted);flex:1}.card-foot{display:flex;justify-content:space-between;align-items:center;padding-top:20px;margin-top:20px;border-top:1px solid var(--line);font-size:.75rem;letter-spacing:.1em;color:#c5c8da}.arrow{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(169,149,255,.15);font-size:1rem}.contact{text-align:center}.contact h2{font-family:"Playfair Display",serif;font-size:clamp(3rem,7vw,6rem);line-height:1;text-align:center;margin:0 auto 24px}.contact h2 span{color:var(--violet);font-style:italic}.contact p{color:var(--muted);max-width:560px;margin:0 auto 32px}.footer{border-top:1px solid var(--line);padding:30px 0;color:#7f849e;font-size:.78rem}.footer-inner{display:flex;justify-content:space-between;gap:20px}.fade{opacity:0;transform:translateY(22px);transition:opacity .75s ease,transform .75s ease}.fade.show{opacity:1;transform:none}@keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.25;transform:scale(.72)}}
-    @media(max-width:850px){.nav-links a:not(.admin-link){display:none}.hero{grid-template-columns:1fr;text-align:center;padding-top:120px}.eyebrow,.hero-actions{justify-content:center}.hero-sub{margin-left:auto;margin-right:auto}.orbit-wrap{width:280px}.scroll-note{display:none}.section{padding:84px 0}.section-head,.about-grid{grid-template-columns:1fr}.card{flex-basis:calc((100% - 20px)/2)}.section-head{gap:16px}}@media(max-width:580px){.wrap{width:min(100% - 30px,var(--max))}.hero h1{font-size:3.5rem}.orbit-wrap{width:230px}.card{flex-basis:88%}.about-copy,.about-aside{padding:25px}.footer-inner{flex-direction:column}.section{padding:70px 0}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.orbit,.spark{animation:none}.fade{opacity:1;transform:none;transition:none}}
+    :root {
+      --bg: #050713;
+      --panel: rgba(14, 18, 38, 0.72);
+      --line: rgba(196, 205, 255, 0.13);
+      --text: #f7f5ff;
+      --muted: #a6abc4;
+      --violet: #a995ff;
+      --blue: #72c7ff;
+      --gold: #f7d58b;
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: "DM Sans", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(var(--max), calc(100% - 44px));
+      margin: 0 auto;
+    }
+
+    .sky {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(
+          circle at 70% 8%,
+          rgba(94, 70, 190, 0.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 8% 54%,
+          rgba(31, 112, 179, 0.11),
+          transparent 34%
+        ),
+        linear-gradient(
+          180deg,
+          #03040b 0%,
+          #070a17 52%,
+          #0a0d1b 100%
+        );
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .nebula-bg {
+      position: fixed;
+      width: 42vw;
+      height: 42vw;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .nebula-bg--one {
+      right: -18vw;
+      top: 18vh;
+      background: #7259ff;
+    }
+
+    .nebula-bg--two {
+      left: -22vw;
+      bottom: -10vh;
+      background: #2b9fd7;
+    }
+
+    /* 导航 */
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      border-bottom: 1px solid transparent;
+      background: rgba(5, 7, 19, 0.58);
+      backdrop-filter: blur(18px);
+      transition: 0.3s;
+    }
+
+    .nav.scrolled {
+      border-color: var(--line);
+      background: rgba(5, 7, 19, 0.88);
+    }
+
+    .nav-inner {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* 首屏 */
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 50px;
+      padding: 125px 0 70px;
+    }
+
+    .eyebrow,
+    .kicker {
+      color: var(--blue);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow::before {
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    .hero h1 {
+      max-width: 850px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.2rem, 7vw, 6.8rem);
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+      white-space: pre-line;
+    }
+
+    .hero-sub {
+      max-width: 580px;
+      margin: 30px 0 36px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.6vw, 1.16rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.25s;
+    }
+
+    .btn-primary {
+      color: #090b16;
+      background: linear-gradient(135deg, #dcd4ff, #91d5ff);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(123, 159, 255, 0.24);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(190, 200, 255, 0.35);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* 首屏星球 */
+
+    .orbit-wrap {
+      position: relative;
+      width: min(390px, 74vw);
+      aspect-ratio: 1;
+      margin: auto;
+      display: grid;
+      place-items: center;
+    }
+
+    .orbit {
+      position: absolute;
+      border: 1px solid rgba(185, 194, 255, 0.18);
+      border-radius: 50%;
+      animation: spin 28s linear infinite;
+    }
+
+    .orbit--outer {
+      inset: 8%;
+    }
+
+    .orbit--inner {
+      inset: 22%;
+      animation-duration: 20s;
+      animation-direction: reverse;
+    }
+
+    .orbit::after {
+      position: absolute;
+      top: 12%;
+      left: 15%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 18px var(--gold);
+      content: "";
+    }
+
+    .orbit--inner::after {
+      inset: auto 5% 28% auto;
+      background: var(--blue);
+      box-shadow: 0 0 18px var(--blue);
+    }
+
+    .hero-planet {
+      position: relative;
+      width: 34%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #f7eaff 0 4%,
+          #9a84db 22%,
+          #483d81 52%,
+          #15162d 78%
+        );
+      box-shadow:
+        -22px 25px 55px rgba(0, 0, 0, 0.7),
+        0 0 45px rgba(143, 112, 230, 0.2);
+    }
+
+    .hero-planet::after {
+      position: absolute;
+      inset: 47% -37% auto;
+      height: 18%;
+      border: 2px solid rgba(196, 208, 255, 0.62);
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(159, 184, 255, 0.25);
+      content: "";
+      transform: rotate(-13deg);
+    }
+
+    .spark {
+      position: absolute;
+      color: white;
+      text-shadow: 0 0 12px white;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .spark--one {
+      top: 12%;
+      right: 16%;
+      font-size: 22px;
+    }
+
+    .spark--two {
+      bottom: 18%;
+      left: 5%;
+      font-size: 12px;
+      animation-delay: 0.8s;
+    }
+
+    /* 公共模块 */
+
+    .section {
+      padding: 118px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) 1.35fr;
+      align-items: end;
+      gap: 46px;
+      margin-bottom: 55px;
+      text-align: left;
+    }
+
+    .section-head h2 {
+      margin-top: 10px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.3rem, 4.4vw, 4.3rem);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+    }
+
+    .section-desc {
+      max-width: 560px;
+      color: var(--muted);
+    }
+
+    .nowrap {
+      white-space: nowrap;
+    }
+
+    .glass {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(18, 23, 48, 0.83),
+          rgba(10, 13, 29, 0.65)
+        );
+      backdrop-filter: blur(18px);
+    }
+
+    /* 关于我 */
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+    }
+
+    .about-copy {
+      padding: 38px;
+      color: #d9dbea;
+      font-size: 1.1rem;
+      white-space: pre-line;
+    }
+
+    .about-aside {
+      min-height: 260px;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quote-mark {
+      color: var(--gold);
+      font-size: 1.7rem;
+      line-height: 1;
+      text-shadow: 0 0 18px rgba(247, 213, 139, 0.45);
+    }
+
+    .about-aside p {
+      font-family: "Playfair Display", serif;
+      font-size: 1.55rem;
+      font-style: italic;
+      line-height: 1.35;
+    }
+
+    .constellation-line {
+      height: 1px;
+      margin-top: 28px;
+      background:
+        linear-gradient(
+          90deg,
+          var(--violet),
+          var(--blue),
+          transparent
+        );
+    }
+
+    /* 技能 */
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill {
+      padding: 11px 17px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #dfe1f1;
+      background: rgba(255, 255, 255, 0.025);
+      transition: 0.25s;
+    }
+
+    .skill::before {
+      margin-right: 8px;
+      color: var(--gold);
+      font-size: 0.7rem;
+      content: "✦";
+    }
+
+    .skill:hover {
+      border-color: rgba(169, 149, 255, 0.48);
+      background: rgba(169, 149, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* 项目轮播 */
+
+    .projects {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 8px 2px 28px;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .projects::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-card {
+      flex: 0 0 calc((100% - 40px) / 3);
+      min-width: 0;
+      min-height: 430px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      scroll-snap-align: start;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(169, 149, 255, 0.38);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+      transform: translateY(-6px);
+    }
+
+    .card-visual {
+      position: relative;
+      height: 230px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: #0b0e20;
+    }
+
+    .card-visual::after {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          transparent 58%,
+          rgba(8, 10, 23, 0.68)
+        );
+      content: "";
+      pointer-events: none;
+    }
+
+    .card-body {
+      flex: 1;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-num {
+      margin-bottom: 14px;
+      color: var(--blue);
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+    }
+
+    .card-title {
+      margin-bottom: 10px;
+      font-family: "Playfair Display", serif;
+      font-size: 1.45rem;
+      line-height: 1.25;
+    }
+
+    .card-description {
+      flex: 1;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .card-foot {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #c5c8da;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+
+    .arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(169, 149, 255, 0.15);
+      font-size: 1rem;
+      transition: 0.25s;
+    }
+
+    .project-card:hover .arrow {
+      color: #090b16;
+      background: linear-gradient(135deg, #dcd4ff, #91d5ff);
+      transform: rotate(12deg);
+    }
+
+    /* 点点和横杠 */
+
+    .carousel-dots {
+      min-height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.28);
+      cursor: pointer;
+      transition:
+        width 0.3s,
+        background 0.3s,
+        box-shadow 0.3s;
+    }
+
+    .carousel-dot.active {
+      width: 30px;
+      background: linear-gradient(90deg, var(--violet), var(--blue));
+      box-shadow: 0 0 14px rgba(139, 166, 255, 0.42);
+    }
+
+    /* 五种项目视觉 */
+
+    .visual-stars,
+    .visual-nebula,
+    .visual-meteor,
+    .visual-galaxy {
+      position: absolute;
+      inset: 0;
+    }
+
+    .visual-stars {
+      background:
+        radial-gradient(
+          circle at 70% 24%,
+          rgba(103, 81, 211, 0.3),
+          transparent 30%
+        ),
+        linear-gradient(145deg, #10142b, #070914);
+    }
+
+    .visual-stars i {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 12px #fff;
+    }
+
+    .visual-stars i:nth-child(1) {
+      left: 20%;
+      top: 60%;
+    }
+
+    .visual-stars i:nth-child(2) {
+      left: 35%;
+      top: 36%;
+    }
+
+    .visual-stars i:nth-child(3) {
+      left: 53%;
+      top: 50%;
+    }
+
+    .visual-stars i:nth-child(4) {
+      left: 70%;
+      top: 27%;
+    }
+
+    .visual-stars i:nth-child(5) {
+      left: 79%;
+      top: 63%;
+    }
+
+    .visual-stars::after {
+      position: absolute;
+      left: 19%;
+      top: 45%;
+      width: 63%;
+      height: 1px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(176, 192, 255, 0.8),
+          transparent
+        );
+      content: "";
+      transform: rotate(-7deg);
+    }
+
+    .visual-planet {
+      position: relative;
+      z-index: 1;
+      width: 84px;
+      height: 84px;
+      border-radius: 50%;
+      background:
+        radial-gradient(
+          circle at 35% 28%,
+          #fff 0 3%,
+          #b7a8e9 20%,
+          #554779 55%,
+          #17172d 80%
+        );
+      box-shadow: 0 0 38px rgba(169, 149, 255, 0.28);
+    }
+
+    .visual-planet::after {
+      position: absolute;
+      inset: 48% -35% auto;
+      height: 17%;
+      border: 1px solid #b9caff;
+      border-radius: 50%;
+      content: "";
+      transform: rotate(-14deg);
+    }
+
+    .visual-nebula {
+      background:
+        radial-gradient(
+          ellipse at 48% 52%,
+          rgba(214, 178, 255, 0.9),
+          rgba(102, 79, 232, 0.5) 17%,
+          rgba(60, 169, 255, 0.22) 35%,
+          transparent 62%
+        ),
+        radial-gradient(
+          circle at 72% 35%,
+          rgba(247, 213, 139, 0.55),
+          transparent 8%
+        );
+      filter: blur(3px);
+    }
+
+    .visual-meteor {
+      background:
+        radial-gradient(
+          circle at 75% 22%,
+          rgba(86, 74, 178, 0.25),
+          transparent 28%
+        ),
+        linear-gradient(145deg, #0e1228, #060711);
+    }
+
+    .visual-meteor i {
+      position: absolute;
+      width: 90px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #fff);
+      transform: rotate(-34deg);
+      animation: meteor 3.4s ease-in infinite;
+    }
+
+    .visual-meteor i::after {
+      position: absolute;
+      right: -2px;
+      top: -2px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 13px white;
+      content: "";
+    }
+
+    .visual-meteor i:nth-child(1) {
+      left: 16%;
+      top: 32%;
+    }
+
+    .visual-meteor i:nth-child(2) {
+      left: 48%;
+      top: 58%;
+      animation-delay: 1.3s;
+    }
+
+    .visual-meteor i:nth-child(3) {
+      left: 8%;
+      top: 76%;
+      animation-delay: 2.1s;
+    }
+
+    .visual-galaxy {
+      background:
+        radial-gradient(
+          ellipse at center,
+          #fff 0 1%,
+          #d2c5ff 3%,
+          rgba(135, 105, 235, 0.9) 8%,
+          rgba(67, 137, 220, 0.44) 21%,
+          transparent 45%
+        );
+    }
+
+    .visual-galaxy::before,
+    .visual-galaxy::after {
+      position: absolute;
+      inset: 24% 13%;
+      border: 2px solid rgba(178, 157, 255, 0.42);
+      border-radius: 50%;
+      content: "";
+      transform: rotate(-18deg);
+      filter: blur(2px);
+    }
+
+    .visual-galaxy::after {
+      inset: 34% 22%;
+      border-color: rgba(118, 196, 255, 0.5);
+      transform: rotate(22deg);
+    }
+
+    /* 联系 */
+
+    .contact {
+      text-align: center;
+    }
+
+    .contact .kicker {
+      text-align: left;
+    }
+
+    .contact h2 {
+      margin: 12px auto 24px;
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1;
+      text-align: center;
+    }
+
+    .contact h2 span {
+      color: var(--violet);
+      font-style: italic;
+    }
+
+    .contact p {
+      max-width: 560px;
+      margin: 0 auto 32px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 30px 0;
+      border-top: 1px solid var(--line);
+      color: #7f849e;
+      font-size: 0.78rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.75s ease,
+        transform 0.75s ease;
+    }
+
+    .fade.show {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: 0.25;
+        transform: scale(0.72);
+      }
+    }
+
+    @keyframes meteor {
+      0%,
+      18% {
+        opacity: 0;
+        transform: translate(-50px, 50px) rotate(-34deg);
+      }
+
+      42%,
+      70% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(80px, -80px) rotate(-34deg);
+      }
+    }
+
+    @media (max-width: 850px) {
+      .nav-links {
+        gap: 20px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 120px;
+        text-align: center;
+      }
+
+      .eyebrow,
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-sub {
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .orbit-wrap {
+        width: 280px;
+      }
+
+      .section {
+        padding: 84px 0;
+      }
+
+      .section-head,
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        gap: 16px;
+      }
+
+      .project-card {
+        flex-basis: calc((100% - 20px) / 2);
+      }
+    }
+
+    @media (max-width: 580px) {
+      .wrap {
+        width: min(calc(100% - 30px), var(--max));
+      }
+
+      .nav-links a:nth-child(-n+3) {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+      }
+
+      .orbit-wrap {
+        width: 230px;
+      }
+
+      .section {
+        padding: 70px 0;
+      }
+
+      .section-head h2 {
+        font-size: 2.35rem;
+      }
+
+      .project-card {
+        flex-basis: 88%;
+      }
+
+      .about-copy,
+      .about-aside {
+        padding: 25px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .orbit,
+      .spark,
+      .visual-meteor i {
+        animation: none;
+      }
+
+      .fade {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="sky"></div><canvas id="starfield"></canvas><div class="nebula one"></div><div class="nebula two"></div>
-  <nav class="nav" id="nav"><div class="nav-inner wrap"><a class="brand" href="#home" id="siteName">HABBY</a><div class="nav-links"><a href="#about">关于我</a><a href="#skills">技能</a><a href="#projects">项目</a><a href="#contact">联系</a><a class="admin-link" href="admin.html" aria-label="打开内容管理后台">编辑内容</a></div></div></nav>
-  <main><section class="hero wrap" id="home"><div class="hero-copy fade"><div class="eyebrow" id="heroEyebrow">Welcome to my universe</div><h1 id="heroTitle"></h1><p class="hero-sub" id="heroSubtitle"></p><div class="hero-actions"><a class="btn btn-primary" href="#projects">探索我的项目 <span>↓</span></a><a class="btn btn-ghost" href="#about">认识我</a></div></div><div class="orbit-wrap fade" aria-hidden="true"><div class="orbit o1"></div><div class="orbit o2"></div><div class="planet"></div><span class="spark s1">✦</span><span class="spark s2">✧</span></div><div class="scroll-note">Scroll to explore</div></section>
-  <section class="section section-line" id="about"><div class="wrap"><div class="section-head fade"><div><div class="kicker">01 · About</div><h2>星空很远，<br><span class="nowrap">创造就在此刻。</span></h2></div><p class="section-desc">每一个想法都像一颗星，真正让它发光的，是持续把它变成作品。</p></div><div class="about-grid"><div class="glass about-copy fade" id="aboutText"></div><aside class="glass about-aside fade"><div class="quote-mark" aria-hidden="true">✦</div><p id="motto"></p><div class="constellation-line"></div></aside></div></div></section>
-  <section class="section" id="skills"><div class="wrap"><div class="section-head fade"><div><div class="kicker">02 · Capabilities</div><h2>我的技能星图</h2></div><p class="section-desc">持续学习、持续连接，让分散的能力点最终成为一张属于自己的星图。</p></div><div class="skills fade" id="skillsList"></div></div></section>
-  <section class="section section-line" id="projects"><div class="wrap"><div class="section-head fade"><div><div class="kicker">03 · Selected work</div><h2>精选项目</h2></div><p class="section-desc">这里收集了我的实验、作品与正在生长的想法。点击卡片即可进入体验。</p></div><div class="project-slider"><div class="projects" id="projectsGrid"></div><div class="slider-controls"><button class="slider-btn" id="projectPrev" type="button" aria-label="查看上一组项目">←</button><button class="slider-btn" id="projectNext" type="button" aria-label="查看下一组项目">→</button></div></div></div></section>
-  <section class="section section-line contact" id="contact"><div class="wrap fade"><div class="kicker">04 · Contact</div><h2>一起创造一点<br><span>闪闪发光</span>的东西</h2><p id="contactText"></p><a class="btn btn-primary" id="contactLink" href="#">和我联系 ↗</a></div></section></main>
-  <footer class="footer"><div class="wrap footer-inner"><span id="copyright"></span><span>Made among the stars ✦</span></div></footer>
+  <div class="sky"></div>
+  <canvas id="starfield"></canvas>
+  <div class="nebula-bg nebula-bg--one"></div>
+  <div class="nebula-bg nebula-bg--two"></div>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner wrap">
+      <a class="brand" href="#home" id="siteName">HABBY</a>
+
+      <div class="nav-links">
+        <a href="#about">关于我</a>
+        <a href="#skills">技能</a>
+        <a href="#projects">项目</a>
+        <a href="#contact">联系</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero wrap" id="home">
+      <div class="hero-copy fade">
+        <div class="eyebrow" id="heroEyebrow">
+          Welcome to my universe
+        </div>
+
+        <h1 id="heroTitle"></h1>
+        <p class="hero-sub" id="heroSubtitle"></p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">
+            探索我的项目 <span>↓</span>
+          </a>
+
+          <a class="btn btn-ghost" href="#about">
+            认识我
+          </a>
+        </div>
+      </div>
+
+      <div class="orbit-wrap fade" aria-hidden="true">
+        <div class="orbit orbit--outer"></div>
+        <div class="orbit orbit--inner"></div>
+        <div class="hero-planet"></div>
+        <span class="spark spark--one">✦</span>
+        <span class="spark spark--two">✧</span>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap">
+        <div class="section-head fade">
+          <div>
+            <div class="kicker">01 · About</div>
+            <h2>
+              星空很远<br>
+              <span class="nowrap">创造就在此刻</span>
+            </h2>
+          </div>
+
+          <p class="section-desc">
+            每一个想法都像一颗星，真正让它发光的，是持续把它变成作品。
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div
+            class="glass about-copy fade"
+            id="aboutText"
+          ></div>
+
+          <aside class="glass about-aside fade">
+            <div class="quote-mark" aria-hidden="true">✦</div>
+            <p id="motto"></p>
+            <div class="constellation-line"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="wrap">
+        <div class="section-head fade">
+          <div>
+            <div class="kicker">02 · Capabilities</div>
+            <h2>我的技能星图</h2>
+          </div>
+
+          <p class="section-desc">
+            持续学习、持续连接，让分散的能力点最终成为一张属于自己的星图。
+          </p>
+        </div>
+
+        <div class="skills fade" id="skillsList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="wrap">
+        <div class="section-head fade">
+          <div>
+            <div class="kicker">03 · Selected work</div>
+            <h2>精选项目</h2>
+          </div>
+
+          <p class="section-desc">
+            这里收集了我的实验、作品与正在生长的想法。点击卡片即可进入体验。
+          </p>
+        </div>
+
+        <div
+          class="projects"
+          id="projectsGrid"
+          aria-label="精选项目轮播"
+        ></div>
+
+        <div
+          class="carousel-dots"
+          id="projectDots"
+          aria-label="项目轮播位置"
+        ></div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="wrap fade">
+        <div class="kicker">04 · Contact</div>
+
+        <h2>
+          一起创造一点<br>
+          <span>闪闪发光</span>的东西
+        </h2>
+
+        <p id="contactText"></p>
+
+        <a
+          class="btn btn-primary"
+          id="contactLink"
+          href="#"
+        >
+          和我联系 ↗
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span id="copyright"></span>
+      <span>Made among the stars ✦</span>
+    </div>
+  </footer>
+
   <script>
-    const esc=s=>String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-    async function loadData(){try{const r=await fetch('data.json?t='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);const d=await r.json();siteName.textContent=d.name||'HABBY';heroEyebrow.textContent=d.heroEyebrow||'Welcome to my universe';heroTitle.textContent=d.heroTitle||'';heroSubtitle.textContent=d.heroSubtitle||'';aboutText.textContent=d.about||'在这里写下关于你的介绍。';motto.textContent=d.motto||'Stay curious. Keep creating.';skillsList.innerHTML=(d.skills||[]).map(x=>`<span class="skill">${esc(x)}</span>`).join('');contactText.textContent=d.contactText||'';contactLink.textContent=d.contactButton||'和我联系 ↗';contactLink.href=d.contactLink||'#';copyright.textContent=`© ${new Date().getFullYear()} ${d.name||'HABBY'}`;document.title=`${d.name||'Habby'} · Personal Universe`;projectsGrid.innerHTML=(d.projects||[]).map((p,i)=>{let visual=p.type==='planet'?'<div class="planet-mini"></div>':p.type==='nebula'?'<div class="nebula-mini"></div>':`<div class="preview-pattern"></div><span class="preview-badge">${esc(p.badge||'PROJECT')}</span>`;return `<a class="card glass fade" href="${esc(p.link||'#')}" ${String(p.link||'').startsWith('http')?'target="_blank" rel="noopener"':''}><div class="card-visual">${visual}</div><div class="card-body"><div class="card-num">PROJECT · ${String(i+1).padStart(2,'0')}</div><h3 class="card-title">${esc(p.title||'Untitled project')}</h3><p class="card-description">${esc(p.description||'点击查看这个项目。')}</p><div class="card-foot"><span>${esc(p.btnText||'EXPLORE PROJECT')}</span><span class="arrow">↗</span></div></div></a>`}).join('');setupProjectSlider();observe()}catch(e){console.error(e);aboutText.textContent='内容加载失败，请确认 data.json 与 index.html 位于同一目录。'}}
-    function setupProjectSlider(){const track=document.getElementById('projectsGrid'),prev=document.getElementById('projectPrev'),next=document.getElementById('projectNext'),controls=document.querySelector('.slider-controls');const update=()=>{const max=track.scrollWidth-track.clientWidth;prev.disabled=track.scrollLeft<4;next.disabled=track.scrollLeft>=max-4;controls.style.visibility=max>4?'visible':'hidden'};const move=direction=>track.scrollBy({left:direction*track.clientWidth,behavior:'smooth'});prev.onclick=()=>move(-1);next.onclick=()=>move(1);track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);requestAnimationFrame(update)}
-    function observe(){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.fade:not(.show)').forEach(el=>io.observe(el))}const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>20),{passive:true});
-    const canvas=document.getElementById('starfield'),ctx=canvas.getContext('2d');let w,h,stars=[],dpr=1;function resize(){w=innerWidth;h=innerHeight;dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:Math.min(180,Math.floor(w*h/6500))},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.25+.2,a:Math.random()*.7+.2,s:Math.random()*.006+.002,p:Math.random()*6.28}))}function draw(t){ctx.clearRect(0,0,w,h);for(const s of stars){const a=s.a*(.65+.35*Math.sin(t*s.s+s.p));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,6.28);ctx.fillStyle=`rgba(226,232,255,${a})`;ctx.fill()}requestAnimationFrame(draw)}addEventListener('resize',resize);resize();requestAnimationFrame(draw);loadData();observe();
+    const $ = id => document.getElementById(id);
+
+    const escapeHTML = value =>
+      String(value ?? "").replace(/[&<>'"]/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
+      })[char]);
+
+    const safeLink = value => {
+      const link = String(value || "#").trim();
+
+      return /^(https?:\/\/|mailto:|#|\.\/|\/)/i.test(link)
+        ? link
+        : "#";
+    };
+
+    function projectVisual(type) {
+      const visuals = {
+        stars: `
+          <div class="visual-stars">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+        `,
+
+        pattern: `
+          <div class="visual-stars">
+            <i></i><i></i><i></i><i></i><i></i>
+          </div>
+        `,
+
+        planet: `
+          <div class="visual-planet"></div>
+        `,
+
+        nebula: `
+          <div class="visual-nebula"></div>
+        `,
+
+        meteor: `
+          <div class="visual-meteor">
+            <i></i><i></i><i></i>
+          </div>
+        `,
+
+        galaxy: `
+          <div class="visual-galaxy"></div>
+        `
+      };
+
+      return visuals[type] || visuals.stars;
+    }
+
+    function renderProjects(projects) {
+      $("projectsGrid").innerHTML = projects
+        .map((project, index) => {
+          const link = safeLink(project.link);
+
+          const external = /^https?:\/\//i.test(link)
+            ? ' target="_blank" rel="noopener"'
+            : "";
+
+          return `
+            <a
+              class="project-card glass fade"
+              href="${escapeHTML(link)}"
+              ${external}
+            >
+              <div class="card-visual">
+                ${projectVisual(project.type)}
+              </div>
+
+              <div class="card-body">
+                <div class="card-num">
+                  PROJECT · ${String(index + 1).padStart(2, "0")}
+                </div>
+
+                <h3 class="card-title">
+                  ${escapeHTML(project.title || "Untitled project")}
+                </h3>
+
+                <p class="card-description">
+                  ${escapeHTML(
+                    project.description || "点击查看这个项目。"
+                  )}
+                </p>
+
+                <div class="card-foot">
+                  <span>查看项目</span>
+                  <span class="arrow">↗</span>
+                </div>
+              </div>
+            </a>
+          `;
+        })
+        .join("");
+    }
+
+    function setupCarousel() {
+      const track = $("projectsGrid");
+      const dots = $("projectDots");
+      const cards = [...track.querySelectorAll(".project-card")];
+
+      const visibleCount = () => {
+        if (window.innerWidth > 850) return 3;
+        if (window.innerWidth > 580) return 2;
+        return 1;
+      };
+
+      const cardStep = () => {
+        if (cards[1]) {
+          return cards[1].offsetLeft - cards[0].offsetLeft;
+        }
+
+        return track.clientWidth;
+      };
+
+      function updateDots() {
+        const items = [...dots.children];
+
+        const active = Math.min(
+          items.length - 1,
+          Math.max(
+            0,
+            Math.round(track.scrollLeft / cardStep())
+          )
+        );
+
+        items.forEach((dot, index) => {
+          const isActive = index === active;
+
+          dot.classList.toggle("active", isActive);
+          dot.setAttribute(
+            "aria-current",
+            isActive ? "true" : "false"
+          );
+        });
+      }
+
+      function buildDots() {
+        const pages = Math.max(
+          1,
+          cards.length - visibleCount() + 1
+        );
+
+        dots.innerHTML = Array
+          .from({ length: pages }, (_, index) => `
+            <button
+              class="carousel-dot${index === 0 ? " active" : ""}"
+              type="button"
+              aria-label="查看第 ${index + 1} 组项目"
+            ></button>
+          `)
+          .join("");
+
+        [...dots.children].forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            track.scrollTo({
+              left: index * cardStep(),
+              behavior: "smooth"
+            });
+          });
+        });
+
+        dots.hidden = cards.length < 2;
+        updateDots();
+      }
+
+      let resizeTimer;
+
+      track.addEventListener(
+        "scroll",
+        updateDots,
+        { passive: true }
+      );
+
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+
+        resizeTimer = setTimeout(
+          buildDots,
+          120
+        );
+      });
+
+      buildDots();
+    }
+
+    function observeElements() {
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.12
+        }
+      );
+
+      document
+        .querySelectorAll(".fade:not(.show)")
+        .forEach(element => observer.observe(element));
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch(
+          `data.json?t=${Date.now()}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        $("siteName").textContent =
+          data.name || "HABBY";
+
+        $("heroEyebrow").textContent =
+          data.heroEyebrow || "Welcome to my universe";
+
+        $("heroTitle").textContent =
+          data.heroTitle || "";
+
+        $("heroSubtitle").textContent =
+          data.heroSubtitle || "";
+
+        $("aboutText").textContent =
+          data.about || "在这里写下关于你的介绍。";
+
+        $("motto").textContent =
+          data.motto || "Stay curious. Keep creating.";
+
+        $("skillsList").innerHTML =
+          (data.skills || [])
+            .map(skill => `
+              <span class="skill">
+                ${escapeHTML(skill)}
+              </span>
+            `)
+            .join("");
+
+        $("contactText").textContent =
+          data.contactText || "";
+
+        $("contactLink").textContent =
+          data.contactButton || "和我联系 ↗";
+
+        $("contactLink").href =
+          safeLink(data.contactLink);
+
+        $("copyright").textContent =
+          `© ${new Date().getFullYear()} ${data.name || "HABBY"}`;
+
+        document.title =
+          `${data.name || "Habby"} · Personal Universe`;
+
+        renderProjects(data.projects || []);
+        setupCarousel();
+        observeElements();
+      } catch (error) {
+        console.error(error);
+
+        $("aboutText").textContent =
+          "内容加载失败，请确认 data.json 与 index.html 位于同一目录。";
+      }
+    }
+
+    const nav = $("nav");
+
+    addEventListener(
+      "scroll",
+      () => {
+        nav.classList.toggle(
+          "scrolled",
+          scrollY > 20
+        );
+      },
+      { passive: true }
+    );
+
+    /* 星空 Canvas */
+
+    const canvas = $("starfield");
+    const context = canvas.getContext("2d");
+
+    let width = 0;
+    let height = 0;
+    let stars = [];
+
+    function resizeStars() {
+      width = innerWidth;
+      height = innerHeight;
+
+      const ratio = Math.min(
+        devicePixelRatio || 1,
+        2
+      );
+
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      context.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+      );
+
+      stars = Array.from({
+        length: Math.min(
+          180,
+          Math.floor(width * height / 6500)
+        )
+      }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * 1.25 + 0.2,
+        alpha: Math.random() * 0.7 + 0.2,
+        speed: Math.random() * 0.006 + 0.002,
+        phase: Math.random() * Math.PI * 2
+      }));
+    }
+
+    function drawStars(time) {
+      context.clearRect(
+        0,
+        0,
+        width,
+        height
+      );
+
+      stars.forEach(star => {
+        const alpha =
+          star.alpha *
+          (
+            0.65 +
+            0.35 *
+            Math.sin(
+              time * star.speed + star.phase
+            )
+          );
+
+        context.beginPath();
+
+        context.arc(
+          star.x,
+          star.y,
+          star.radius,
+          0,
+          Math.PI * 2
+        );
+
+        context.fillStyle =
+          `rgba(226, 232, 255, ${alpha})`;
+
+        context.fill();
+      });
+
+      requestAnimationFrame(drawStars);
+    }
+
+    addEventListener(
+      "resize",
+      resizeStars
+    );
+
+    resizeStars();
+    requestAnimationFrame(drawStars);
+    observeElements();
+    loadData();
   </script>
-</body></html>
+</body>
+</html>
