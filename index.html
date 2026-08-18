@@ -31,6 +31,8 @@
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 68px;
+      scroll-snap-type: y proximity;
     }
 
     body {
@@ -106,7 +108,7 @@
       background: #2b9fd7;
     }
 
-    /* 顶部导航 */
+    /* 导航 */
 
     .nav {
       position: fixed;
@@ -163,6 +165,7 @@
       align-items: center;
       gap: 50px;
       padding: 125px 0 70px;
+      scroll-snap-align: start;
     }
 
     .eyebrow,
@@ -337,11 +340,20 @@
       animation-delay: 0.8s;
     }
 
-    /* 公共模块 */
+    /* 整屏模块 */
 
     .section {
-      padding: 118px 0;
+      min-height: 100svh;
+      padding: clamp(84px, 10vh, 118px) 0;
       border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .section > .wrap {
+      width: min(var(--max), calc(100% - 44px));
     }
 
     .section-head {
@@ -382,7 +394,7 @@
       backdrop-filter: blur(18px);
     }
 
-    /* 关于我 */
+    /* About */
 
     .about-grid {
       display: grid;
@@ -480,7 +492,7 @@
     .project-card {
       flex: 0 0 calc((100% - 40px) / 3);
       min-width: 0;
-      min-height: 430px;
+      min-height: clamp(370px, 46vh, 430px);
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -497,7 +509,7 @@
 
     .card-visual {
       position: relative;
-      height: 230px;
+      height: clamp(180px, 23vh, 230px);
       overflow: hidden;
       display: grid;
       place-items: center;
@@ -572,7 +584,7 @@
       transform: rotate(12deg);
     }
 
-    /* 点点和横杠指示器 */
+    /* 轮播指示器 */
 
     .carousel-dots {
       min-height: 18px;
@@ -794,7 +806,7 @@
       transform: rotate(22deg);
     }
 
-    /* 联系 */
+    /* Contact */
 
     .contact {
       text-align: center;
@@ -836,7 +848,7 @@
       gap: 20px;
     }
 
-    /* 滚动淡入动画 */
+    /* 滚动出现效果 */
 
     .fade {
       opacity: 0;
@@ -944,7 +956,8 @@
     }
 
     @media (max-width: 580px) {
-      .wrap {
+      .wrap,
+      .section > .wrap {
         width: min(calc(100% - 30px), var(--max));
       }
 
@@ -982,9 +995,24 @@
       }
     }
 
+    @media (max-height: 760px) and (min-width: 851px) {
+      .section {
+        min-height: 760px;
+      }
+
+      .project-card {
+        min-height: 370px;
+      }
+
+      .card-visual {
+        height: 180px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
+        scroll-snap-type: none;
       }
 
       .orbit,
@@ -1090,7 +1118,6 @@
             </div>
 
             <p id="motto"></p>
-
             <div class="constellation-line"></div>
           </aside>
         </div>
@@ -1192,44 +1219,35 @@
     const escapeHTML = value =>
       String(value ?? "").replace(
         /[&<>'"]/g,
-        char => ({
+        character => ({
           "&": "&amp;",
           "<": "&lt;",
           ">": "&gt;",
           "'": "&#39;",
           '"': "&quot;"
-        })[char]
+        })[character]
       );
 
     const safeLink = value => {
       const link =
         String(value || "#").trim();
 
-      return /^(https?:\/\/|mailto:|#|\.\/|\/)/i
-        .test(link)
-          ? link
-          : "#";
+      return /^(https?:\/\/|mailto:|#|\.\/|\/)/i.test(link)
+        ? link
+        : "#";
     };
 
     function projectVisual(type) {
       const visuals = {
         stars: `
           <div class="visual-stars">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
+            <i></i><i></i><i></i><i></i><i></i>
           </div>
         `,
 
         pattern: `
           <div class="visual-stars">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
+            <i></i><i></i><i></i><i></i><i></i>
           </div>
         `,
 
@@ -1243,9 +1261,7 @@
 
         meteor: `
           <div class="visual-meteor">
-            <i></i>
-            <i></i>
-            <i></i>
+            <i></i><i></i><i></i>
           </div>
         `,
 
@@ -1281,21 +1297,18 @@
 
                 <div class="card-body">
                   <div class="card-num">
-                    PROJECT ·
-                    ${String(index + 1).padStart(2, "0")}
+                    PROJECT · ${String(index + 1).padStart(2, "0")}
                   </div>
 
                   <h3 class="card-title">
                     ${escapeHTML(
-                      project.title ||
-                      "Untitled project"
+                      project.title || "Untitled project"
                     )}
                   </h3>
 
                   <p class="card-description">
                     ${escapeHTML(
-                      project.description ||
-                      "点击查看这个项目。"
+                      project.description || "点击查看这个项目。"
                     )}
                   </p>
 
@@ -1318,9 +1331,7 @@
         $("projectDots");
 
       const cards = [
-        ...track.querySelectorAll(
-          ".project-card"
-        )
+        ...track.querySelectorAll(".project-card")
       ];
 
       const visibleCount = () => {
@@ -1374,9 +1385,7 @@
 
             dot.setAttribute(
               "aria-current",
-              isActive
-                ? "true"
-                : "false"
+              isActive ? "true" : "false"
             );
           }
         );
@@ -1395,15 +1404,9 @@
             { length: pages },
             (_, index) => `
               <button
-                class="carousel-dot${
-                  index === 0
-                    ? " active"
-                    : ""
-                }"
+                class="carousel-dot${index === 0 ? " active" : ""}"
                 type="button"
-                aria-label="查看第 ${
-                  index + 1
-                } 组项目"
+                aria-label="查看第 ${index + 1} 组项目"
               ></button>
             `
           )
@@ -1445,9 +1448,7 @@
       window.addEventListener(
         "resize",
         () => {
-          clearTimeout(
-            resizeTimer
-          );
+          clearTimeout(resizeTimer);
 
           resizeTimer =
             setTimeout(
@@ -1471,12 +1472,10 @@
             entries => {
               entries.forEach(
                 entry => {
-                  entry.target
-                    .classList
-                    .toggle(
-                      "show",
-                      entry.isIntersecting
-                    );
+                  entry.target.classList.toggle(
+                    "show",
+                    entry.isIntersecting
+                  );
                 }
               );
             },
@@ -1493,11 +1492,10 @@
           ".fade:not([data-reveal-ready])"
         )
         .forEach(element => {
-          element.dataset
-            .revealReady = "true";
+          element.dataset.revealReady =
+            "true";
 
-          revealObserver
-            .observe(element);
+          revealObserver.observe(element);
         });
     }
 
@@ -1557,21 +1555,15 @@
           "和我联系 ↗";
 
         $("contactLink").href =
-          safeLink(
-            data.contactLink
-          );
+          safeLink(data.contactLink);
 
         $("copyright").textContent =
-          `© ${
-            new Date().getFullYear()
-          } ${
+          `© ${new Date().getFullYear()} ${
             data.name || "HABBY"
           }`;
 
         document.title =
-          `${
-            data.name || "Habby"
-          } · Personal Universe`;
+          `${data.name || "Habby"} · Personal Universe`;
 
         renderProjects(
           data.projects || []
@@ -1587,7 +1579,8 @@
       }
     }
 
-    const nav = $("nav");
+    const nav =
+      $("nav");
 
     addEventListener(
       "scroll",
@@ -1717,12 +1710,7 @@
         );
 
         context.fillStyle =
-          `rgba(
-            226,
-            232,
-            255,
-            ${alpha}
-          )`;
+          `rgba(226, 232, 255, ${alpha})`;
 
         context.fill();
       });
