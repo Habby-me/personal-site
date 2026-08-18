@@ -1,299 +1,850 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+
   <title>网站内容管理后台 · Admin</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #090d16;
-      --card: #111827;
-      --border: rgba(255, 255, 255, 0.1);
-      --text: #f3f4f6;
-      --text-muted: #9ca3af;
-      --accent: #3b82f6;
-      --danger: #ef4444;
+      --bg: #070916;
+      --panel: rgba(17, 22, 44, 0.9);
+      --field: rgba(5, 7, 18, 0.58);
+      --line: rgba(196, 205, 255, 0.13);
+      --text: #f5f3ff;
+      --muted: #a5abc3;
+      --accent: #a995ff;
+      --blue: #72c7ff;
+      --danger: #ef6572;
+      --success: #5ad4a3;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; padding: 30px 20px; }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { margin-bottom: 24px; font-size: 1.6rem; }
-    .card-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
-    .form-group { margin-bottom: 16px; }
-    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
-    input, textarea, select { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: #fff; padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; font-family: inherit; }
-    input:focus, textarea:focus, select:focus { border-color: var(--accent); outline: none; }
-    .project-item { background: rgba(0,0,0,0.25); border: 1px dashed var(--border); border-radius: 8px; padding: 16px; margin-bottom: 14px; position: relative; }
-    .btn { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 0.9rem; transition: opacity 0.2s; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-secondary { background: rgba(255,255,255,0.1); color: #fff; margin-top: 10px; }
-    .btn-danger { background: var(--danger); color: #fff; font-size: 0.75rem; padding: 6px 12px; position: absolute; right: 14px; top: 14px; }
-    .btn:hover { opacity: 0.9; }
-    .flex-row { display: flex; gap: 12px; }
-    .status-msg { margin-top: 16px; font-size: 0.9rem; }
-    .notice { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; margin-top: 8px; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 34px 20px 70px;
+      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 78% 8%,
+          rgba(105, 78, 207, 0.17),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 8% 60%,
+          rgba(45, 145, 190, 0.1),
+          transparent 32%
+        ),
+        var(--bg);
+      font-family: "DM Sans", system-ui, sans-serif;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: auto;
+    }
+
+    .topbar {
+      margin-bottom: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+    }
+
+    .back-link {
+      color: var(--blue);
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .card-box {
+      margin-bottom: 22px;
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      backdrop-filter: blur(18px);
+    }
+
+    .card-title {
+      margin-bottom: 19px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.08rem;
+    }
+
+    .card-title span {
+      width: 25px;
+      height: 25px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--blue);
+      font-size: 0.72rem;
+    }
+
+    .form-group {
+      flex: 1;
+      margin-bottom: 17px;
+    }
+
+    .flex-row {
+      display: flex;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 500;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      color: #fff;
+      background: var(--field);
+      font: inherit;
+      font-size: 0.92rem;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+
+    textarea {
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(169, 149, 255, 0.1);
+    }
+
+    .notice {
+      margin-top: 1px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+
+    .project-item {
+      position: relative;
+      margin-bottom: 15px;
+      padding: 19px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(5, 7, 18, 0.38);
+    }
+
+    .project-number {
+      margin-bottom: 15px;
+      color: var(--blue);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+    }
+
+    .btn {
+      padding: 10px 19px;
+      border: 0;
+      border-radius: 9px;
+      color: white;
+      font: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition:
+        opacity 0.2s,
+        transform 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      padding: 12px 26px;
+      color: #080a15;
+      background: linear-gradient(135deg, #d9d0ff, #83d2ff);
+    }
+
+    .btn-secondary {
+      margin-top: 3px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .btn-danger {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      padding: 6px 11px;
+      color: #ffc4ca;
+      background: rgba(239, 101, 114, 0.13);
+      font-size: 0.75rem;
+    }
+
+    .save-area {
+      text-align: right;
+    }
+
+    .status-msg {
+      margin-top: 14px;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 24px 14px 55px;
+      }
+
+      .card-box {
+        padding: 20px;
+      }
+
+      .flex-row {
+        display: block;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-      <h1>网站后台管理 (Admin)</h1>
-      <a href="index.html" style="color: var(--accent); text-decoration: none;">← 返回首页</a>
-    </div>
+    <header class="topbar">
+      <h1>网站内容管理</h1>
 
-    <div class="card-box">
-      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">1. GitHub 提交配置</h2>
+      <a class="back-link" href="index.html">
+        ← 返回首页
+      </a>
+    </header>
+
+    <section class="card-box">
+      <h2 class="card-title">
+        <span>01</span>
+        GitHub 提交配置
+      </h2>
+
       <div class="flex-row">
-        <div class="form-group" style="flex: 1;">
-          <label>GitHub 用户名 / 仓库名</label>
-          <input type="text" id="repoPath" placeholder="例如: habby-me/personal-site" value="habby-me/personal-site">
+        <div class="form-group">
+          <label for="repoPath">
+            GitHub 用户名 / 仓库名
+          </label>
+
+          <input
+            type="text"
+            id="repoPath"
+            value="Habby-me/personal-site"
+            placeholder="Habby-me/personal-site"
+          >
         </div>
-        <div class="form-group" style="flex: 1;">
-          <label>Personal Access Token (PAT)</label>
-          <input type="password" id="ghToken" placeholder="github_pat_xxxxxx">
+
+        <div class="form-group">
+          <label for="ghToken">
+            Personal Access Token
+          </label>
+
+          <input
+            type="password"
+            id="ghToken"
+            placeholder="github_pat_xxxxxx"
+            autocomplete="off"
+          >
         </div>
       </div>
-      <p class="notice">* Token 仅保存在浏览器本地（localStorage）。需要勾选 Contents 的 Read and Write 权限。</p>
-    </div>
 
-    <div class="card-box">
-      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">2. 基本信息设置</h2>
+      <p class="notice">
+        Token 仅保存在当前浏览器中，并且需要 personal-site
+        仓库的 Contents：Read and write 权限。
+      </p>
+    </section>
+
+    <section class="card-box">
+      <h2 class="card-title">
+        <span>02</span>
+        基本信息设置
+      </h2>
+
       <div class="form-group">
-        <label>网站名称 / Logo 标识</label>
+        <label for="siteName">
+          网站名称 / Logo 标识
+        </label>
         <input type="text" id="siteName">
       </div>
+
       <div class="form-group">
-        <label>首屏眉标题 / 英文小标题</label>
+        <label for="heroEyebrow">
+          首屏眉标题 / 英文小标题
+        </label>
         <input type="text" id="heroEyebrow">
       </div>
+
       <div class="form-group">
-        <label>Hero 大标题</label>
+        <label for="heroTitle">
+          Hero 大标题
+        </label>
         <textarea id="heroTitle" rows="2"></textarea>
       </div>
+
       <div class="form-group">
-        <label>Hero 副标题 / 签名</label>
+        <label for="heroSubtitle">
+          Hero 副标题 / 签名
+        </label>
         <input type="text" id="heroSubtitle">
       </div>
+
       <div class="form-group">
-        <label>关于我</label>
+        <label for="aboutText">
+          关于我
+        </label>
         <textarea id="aboutText" rows="6"></textarea>
       </div>
+
       <div class="form-group">
-        <label>个人短句 / Motto</label>
+        <label for="motto">
+          个人短句 / Motto
+        </label>
         <input type="text" id="motto">
       </div>
+
       <div class="form-group">
-        <label>技能标签（使用英文逗号或中文逗号分隔）</label>
-        <input type="text" id="skills" placeholder="UI Design, HTML / CSS, JavaScript">
+        <label for="skills">
+          技能标签（用中文或英文逗号分隔）
+        </label>
+
+        <input
+          type="text"
+          id="skills"
+          placeholder="UI Design, HTML / CSS, JavaScript"
+        >
       </div>
+
       <div class="form-group">
-        <label>联系区说明</label>
+        <label for="contactText">
+          联系区说明
+        </label>
         <textarea id="contactText" rows="3"></textarea>
       </div>
+
       <div class="flex-row">
-        <div class="form-group" style="flex: 1;">
-          <label>联系按钮文字</label>
+        <div class="form-group">
+          <label for="contactButton">
+            联系按钮文字
+          </label>
           <input type="text" id="contactButton">
         </div>
-        <div class="form-group" style="flex: 1;">
-          <label>联系按钮链接</label>
-          <input type="text" id="contactLink" placeholder="mailto:you@example.com 或 https://...">
+
+        <div class="form-group">
+          <label for="contactLink">
+            联系按钮链接
+          </label>
+
+          <input
+            type="text"
+            id="contactLink"
+            placeholder="mailto:you@example.com 或 https://..."
+          >
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="card-box">
-      <h2 style="font-size: 1.1rem; margin-bottom: 14px;">3. 精选项目管理</h2>
+    <section class="card-box">
+      <h2 class="card-title">
+        <span>03</span>
+        精选项目管理
+      </h2>
+
       <div id="projectsContainer"></div>
-      <button class="btn btn-secondary" onclick="addProjectItem()">+ 添加新项目</button>
-    </div>
 
-    <div style="text-align: right;">
-      <button class="btn btn-primary" onclick="saveToGitHub()" id="saveBtn" style="padding: 12px 28px; font-size: 1rem;">
+      <button
+        class="btn btn-secondary"
+        type="button"
+        id="addProjectBtn"
+      >
+        ＋ 添加新项目
+      </button>
+    </section>
+
+    <div class="save-area">
+      <button
+        class="btn btn-primary"
+        type="button"
+        id="saveBtn"
+      >
         保存并同步到 GitHub
       </button>
-      <div id="statusMsg" class="status-msg"></div>
+
+      <div
+        class="status-msg"
+        id="statusMsg"
+        role="status"
+      ></div>
     </div>
   </div>
 
   <script>
+    const $ = id => document.getElementById(id);
+
+    const escapeHTML = value =>
+      String(value ?? "").replace(/[&<>'"]/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
+      })[char]);
+
+    const visualOptions = [
+      ["stars", "星座微光"],
+      ["planet", "环形星球"],
+      ["nebula", "梦幻星云"],
+      ["meteor", "流星轨迹"],
+      ["galaxy", "旋涡星系"]
+    ];
+
     let projectsData = [];
 
-    async function init() {
-      const savedToken = localStorage.getItem('gh_token');
-      const savedRepo = localStorage.getItem('gh_repo');
-      if (savedToken) document.getElementById('ghToken').value = savedToken;
-      if (savedRepo) document.getElementById('repoPath').value = savedRepo;
+    function normalizeProject(project = {}) {
+      const available =
+        visualOptions.some(
+          ([type]) => type === project.type
+        );
 
-      try {
-        const res = await fetch('data.json?t=' + Date.now());
-        const data = await res.json();
-        
-        document.getElementById('siteName').value = data.name || '';
-        document.getElementById('heroEyebrow').value = data.heroEyebrow || '';
-        document.getElementById('heroTitle').value = data.heroTitle || '';
-        document.getElementById('heroSubtitle').value = data.heroSubtitle || '';
-        document.getElementById('aboutText').value = data.about || '';
-        document.getElementById('motto').value = data.motto || '';
-        document.getElementById('skills').value = (data.skills || []).join(', ');
-        document.getElementById('contactText').value = data.contactText || '';
-        document.getElementById('contactButton').value = data.contactButton || '';
-        document.getElementById('contactLink').value = data.contactLink || '';
-        projectsData = data.projects || [];
-        renderProjectList();
-      } catch (err) {
-        showStatus('无法加载本地 data.json', 'var(--danger)');
-      }
+      return {
+        title: project.title || "",
+        description: project.description || "",
+        type:
+          project.type === "pattern"
+            ? "stars"
+            : available
+              ? project.type
+              : "stars",
+        link: project.link || "#"
+      };
     }
 
     function renderProjectList() {
-      const container = document.getElementById('projectsContainer');
-      container.innerHTML = '';
+      $("projectsContainer").innerHTML =
+        projectsData
+          .map((project, index) => `
+            <article class="project-item">
+              <div class="project-number">
+                PROJECT · ${String(index + 1).padStart(2, "0")}
+              </div>
 
-      projectsData.forEach((item, index) => {
-        const el = document.createElement('div');
-        el.className = 'project-item';
-        el.innerHTML = `
-          <button class="btn btn-danger" onclick="removeProject(${index})">删除</button>
-          <div class="form-group" style="margin-right: 70px;">
-            <label>项目标题</label>
-            <input type="text" value="${item.title || ''}" oninput="projectsData[${index}].title = this.value">
-          </div>
-          <div class="flex-row">
-            <div class="form-group" style="flex: 1;">
-              <label>项目简介</label>
-              <textarea rows="2" oninput="projectsData[${index}].description = this.value">${item.description || ''}</textarea>
-            </div>
-          </div>
-          <div class="flex-row">
-            <div class="form-group" style="flex: 1;">
-              <label>预览视觉样式</label>
-              <select onchange="projectsData[${index}].type = this.value; renderProjectList();">
-                <option value="pattern" ${item.type === 'pattern' ? 'selected' : ''}>斜纹标签 (Pattern Badge)</option>
-                <option value="planet" ${item.type === 'planet' ? 'selected' : ''}>3D 金属星球 (Planet)</option>
-                <option value="nebula" ${item.type === 'nebula' ? 'selected' : ''}>星云光晕 (Nebula Glow)</option>
-              </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label>标签文字 (仅斜纹样式生效)</label>
-              <input type="text" value="${item.badge || ''}" oninput="projectsData[${index}].badge = this.value" ${item.type !== 'pattern' ? 'disabled style="opacity:0.4;"' : ''}>
-            </div>
-          </div>
-          <div class="flex-row">
-            <div class="form-group" style="flex: 1;">
-              <label>底部按钮文案 (原 EXPLORE PROJECT)</label>
-              <input type="text" value="${item.btnText || 'EXPLORE PROJECT'}" oninput="projectsData[${index}].btnText = this.value">
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label>跳转链接 URL</label>
-              <input type="text" value="${item.link || ''}" oninput="projectsData[${index}].link = this.value" placeholder="https://...">
-            </div>
-          </div>
-        `;
-        container.appendChild(el);
-      });
+              <button
+                class="btn btn-danger"
+                type="button"
+                data-remove="${index}"
+              >
+                删除
+              </button>
+
+              <div class="form-group">
+                <label>项目标题</label>
+
+                <input
+                  type="text"
+                  value="${escapeHTML(project.title)}"
+                  data-field="title"
+                  data-index="${index}"
+                >
+              </div>
+
+              <div class="form-group">
+                <label>项目简介</label>
+
+                <textarea
+                  rows="3"
+                  data-field="description"
+                  data-index="${index}"
+                >${escapeHTML(project.description)}</textarea>
+              </div>
+
+              <div class="flex-row">
+                <div class="form-group">
+                  <label>预览视觉样式</label>
+
+                  <select
+                    data-field="type"
+                    data-index="${index}"
+                  >
+                    ${visualOptions
+                      .map(([value, label]) => `
+                        <option
+                          value="${value}"
+                          ${project.type === value ? "selected" : ""}
+                        >
+                          ${label}
+                        </option>
+                      `)
+                      .join("")}
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>跳转链接 URL</label>
+
+                  <input
+                    type="text"
+                    value="${escapeHTML(project.link)}"
+                    data-field="link"
+                    data-index="${index}"
+                    placeholder="https://..."
+                  >
+                </div>
+              </div>
+            </article>
+          `)
+          .join("");
     }
 
-    function addProjectItem() {
-      projectsData.push({
-        title: '新项目标题',
-        type: 'pattern',
-        badge: 'NEW PROJECT',
-        description: '用一句话介绍这个项目。',
-        btnText: 'EXPLORE PROJECT',
-        link: '#'
-      });
-      renderProjectList();
-    }
+    function updateProject(event) {
+      const index =
+        Number(event.target.dataset.index);
 
-    function removeProject(index) {
-      projectsData.splice(index, 1);
-      renderProjectList();
-    }
+      const field =
+        event.target.dataset.field;
 
-    function showStatus(text, color = '#fff') {
-      const el = document.getElementById('statusMsg');
-      el.style.color = color;
-      el.innerText = text;
-    }
-
-    async function saveToGitHub() {
-      const repo = document.getElementById('repoPath').value.trim();
-      const token = document.getElementById('ghToken').value.trim();
-
-      if (!repo || !token) {
-        showStatus('请先填写仓库名称和 Personal Access Token！', 'var(--danger)');
+      if (
+        !Number.isInteger(index) ||
+        !field ||
+        !projectsData[index]
+      ) {
         return;
       }
 
-      localStorage.setItem('gh_token', token);
-      localStorage.setItem('gh_repo', repo);
+      projectsData[index][field] =
+        event.target.value;
+    }
 
-      const payloadData = {
-        name: document.getElementById('siteName').value,
-        heroEyebrow: document.getElementById('heroEyebrow').value,
-        heroTitle: document.getElementById('heroTitle').value,
-        heroSubtitle: document.getElementById('heroSubtitle').value,
-        about: document.getElementById('aboutText').value,
-        motto: document.getElementById('motto').value,
-        skills: document.getElementById('skills').value.split(/[,，]/).map(item => item.trim()).filter(Boolean),
-        contactText: document.getElementById('contactText').value,
-        contactButton: document.getElementById('contactButton').value,
-        contactLink: document.getElementById('contactLink').value,
-        projects: projectsData
-      };
+    function showStatus(
+      message,
+      color = "var(--text)"
+    ) {
+      $("statusMsg").style.color = color;
+      $("statusMsg").textContent = message;
+    }
 
-      const btn = document.getElementById('saveBtn');
-      btn.disabled = true;
-      showStatus('正在连接 GitHub API 提交更新...', '#9ca3af');
+    async function init() {
+      $("ghToken").value =
+        localStorage.getItem("gh_token") || "";
+
+      $("repoPath").value =
+        localStorage.getItem("gh_repo") ||
+        "Habby-me/personal-site";
 
       try {
-        const getUrl = `https://api.github.com/repos/${repo}/contents/data.json`;
-        const getRes = await fetch(getUrl, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/vnd.github.v3+json'
-          }
-        });
+        const response = await fetch(
+          `data.json?t=${Date.now()}`
+        );
 
-        let sha = '';
-        if (getRes.ok) {
-          const fileInfo = await getRes.json();
-          sha = fileInfo.sha;
+        if (!response.ok) {
+          throw new Error(
+            `HTTP ${response.status}`
+          );
         }
 
-        const contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(payloadData, null, 2))));
-        const putRes = await fetch(getUrl, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            message: 'Update site content via Admin Panel',
-            content: contentBase64,
-            sha: sha || undefined
-          })
-        });
+        const data = await response.json();
 
-        if (putRes.ok) {
-          showStatus('✅ 保存成功！GitHub Pages 会在 1 分钟左右自动更新生效。', '#10b981');
-        } else {
-          const errData = await putRes.json();
-          showStatus(`❌ 保存失败: ${errData.message}`, 'var(--danger)');
-        }
-      } catch (err) {
-        showStatus('❌ 提交异常: ' + err.message, 'var(--danger)');
-      } finally {
-        btn.disabled = false;
+        $("siteName").value =
+          data.name || "";
+
+        $("heroEyebrow").value =
+          data.heroEyebrow || "";
+
+        $("heroTitle").value =
+          data.heroTitle || "";
+
+        $("heroSubtitle").value =
+          data.heroSubtitle || "";
+
+        $("aboutText").value =
+          data.about || "";
+
+        $("motto").value =
+          data.motto || "";
+
+        $("skills").value =
+          (data.skills || []).join(", ");
+
+        $("contactText").value =
+          data.contactText || "";
+
+        $("contactButton").value =
+          data.contactButton || "";
+
+        $("contactLink").value =
+          data.contactLink || "";
+
+        projectsData =
+          (data.projects || [])
+            .map(normalizeProject);
+
+        renderProjectList();
+      } catch (error) {
+        console.error(error);
+
+        showStatus(
+          "无法加载 data.json，请确认三个文件位于同一目录。",
+          "var(--danger)"
+        );
       }
     }
 
-    window.onload = init;
+    async function saveToGitHub() {
+      const repo =
+        $("repoPath").value.trim();
+
+      const token =
+        $("ghToken").value.trim();
+
+      if (!repo || !token) {
+        showStatus(
+          "请先填写仓库名称和 Personal Access Token。",
+          "var(--danger)"
+        );
+
+        return;
+      }
+
+      localStorage.setItem(
+        "gh_token",
+        token
+      );
+
+      localStorage.setItem(
+        "gh_repo",
+        repo
+      );
+
+      const payload = {
+        name:
+          $("siteName").value.trim(),
+
+        heroEyebrow:
+          $("heroEyebrow").value.trim(),
+
+        heroTitle:
+          $("heroTitle").value,
+
+        heroSubtitle:
+          $("heroSubtitle").value.trim(),
+
+        about:
+          $("aboutText").value,
+
+        motto:
+          $("motto").value.trim(),
+
+        skills:
+          $("skills")
+            .value
+            .split(/[,，]/)
+            .map(item => item.trim())
+            .filter(Boolean),
+
+        contactText:
+          $("contactText").value,
+
+        contactButton:
+          $("contactButton").value.trim(),
+
+        contactLink:
+          $("contactLink").value.trim(),
+
+        projects:
+          projectsData.map(normalizeProject)
+      };
+
+      const button = $("saveBtn");
+
+      button.disabled = true;
+
+      showStatus(
+        "正在连接 GitHub 并保存……",
+        "var(--muted)"
+      );
+
+      try {
+        const url =
+          `https://api.github.com/repos/${repo}/contents/data.json`;
+
+        const headers = {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28"
+        };
+
+        const currentResponse =
+          await fetch(url, { headers });
+
+        if (!currentResponse.ok) {
+          const error =
+            await currentResponse
+              .json()
+              .catch(() => ({}));
+
+          throw new Error(
+            error.message ||
+            `读取失败（${currentResponse.status}）`
+          );
+        }
+
+        const current =
+          await currentResponse.json();
+
+        const content = btoa(
+          unescape(
+            encodeURIComponent(
+              JSON.stringify(
+                payload,
+                null,
+                2
+              )
+            )
+          )
+        );
+
+        const saveResponse =
+          await fetch(url, {
+            method: "PUT",
+
+            headers: {
+              ...headers,
+              "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+              message:
+                "Update site content via admin panel",
+
+              content,
+              sha: current.sha
+            })
+          });
+
+        if (!saveResponse.ok) {
+          const error =
+            await saveResponse
+              .json()
+              .catch(() => ({}));
+
+          throw new Error(
+            error.message ||
+            `保存失败（${saveResponse.status}）`
+          );
+        }
+
+        showStatus(
+          "✓ 保存成功，GitHub Pages 将在几分钟内更新。",
+          "var(--success)"
+        );
+      } catch (error) {
+        console.error(error);
+
+        const permissionHint =
+          /accessible|permission|403/i
+            .test(error.message)
+            ? " 请检查 Token 的 Contents：Read and write 权限。"
+            : "";
+
+        showStatus(
+          `保存失败：${error.message}${permissionHint}`,
+          "var(--danger)"
+        );
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    $("projectsContainer")
+      .addEventListener(
+        "input",
+        updateProject
+      );
+
+    $("projectsContainer")
+      .addEventListener(
+        "change",
+        updateProject
+      );
+
+    $("projectsContainer")
+      .addEventListener(
+        "click",
+        event => {
+          const index =
+            Number(
+              event.target.dataset.remove
+            );
+
+          if (!Number.isInteger(index)) {
+            return;
+          }
+
+          projectsData.splice(index, 1);
+          renderProjectList();
+        }
+      );
+
+    $("addProjectBtn")
+      .addEventListener(
+        "click",
+        () => {
+          projectsData.push(
+            normalizeProject({
+              title: "新项目标题",
+              description:
+                "用一句话介绍这个项目。",
+              type: "stars",
+              link: "#"
+            })
+          );
+
+          renderProjectList();
+        }
+      );
+
+    $("saveBtn")
+      .addEventListener(
+        "click",
+        saveToGitHub
+      );
+
+    init();
   </script>
 </body>
 </html>
